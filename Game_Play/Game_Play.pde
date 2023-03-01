@@ -7,6 +7,8 @@ int sunCircleX2;
 int sunCircleY2;
 int cloudWidth;
 int cloudHeight;
+int speed;
+int a;
 
 
 final color WHITE = color(255, 255, 255);
@@ -24,10 +26,10 @@ void setup() {
   sunCircleY2 = 160;
   cloudWidth = 50;
   cloudHeight = 50;
+  speed = 5;
+  
+ // cloud = 0;
 }//End setup
-
-
-
 
 void draw() {
   background(BLUE);
@@ -38,6 +40,16 @@ void draw() {
   birdOn(100, 40, 50, 100, 70, 60);
   birdOn(150, 100, 80, 100, 80, 80);
  
+ if(speed > 1500 ){
+     cloudOn(50, 240, 50);
+    }
+  speed ++;
+ 
+ //if(a < width){
+ //   cloudOn(50, 240, 50);
+ //   a = a + speed;
+ // }
+ //speed++;
 }//End draw
 
 void sunOn(int dynamic_Diam) {

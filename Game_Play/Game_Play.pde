@@ -1,7 +1,7 @@
+boolean button;
+
 int sunCircleX1;
 int sunCircleY1;
-int sunWidth;
-int sunHeight;
 
 int myX;
 int myY;
@@ -20,10 +20,9 @@ final color PINK = color (159, 43, 104);
 
 void setup() {
   size(1080, 800);
-  sunCircleX1 = width-(width/8);
+  sunCircleX1 = width -(width/8);
   sunCircleY1 = height/5;
-
-
+  button = false;
 
   cloudX1 = 50;
   cloudY1 = 240;
@@ -49,7 +48,8 @@ void setup() {
 
   birdX3 = 210;
   birdY3 = 300;
-  size = 300;
+  size = 0;
+ 
 
 
   speed = 2;
@@ -58,18 +58,23 @@ void setup() {
 void draw() {
   background(BLUE);
   noStroke();
-
-  sunOn(150);
-  circleButton(140);
-
-  if ( myX > width || myY> 0) {
-    myX = size;
+  if(button == true){
+    fill(PINK);
+  ellipse(mouseX, mouseY, size, size);  
   }
+if(size == 300){
+  size = 0;
+  }
+  size ++;
+  sunOn(150);
+  circleButton(0);
 
-  birdOn(fbirdX1, fbirdY1, fbirdX2, fbirdY2, fbirdX3, fbirdY3);
-  fbirdX1 = fbirdX1 + speed;
-  fbirdX2 = fbirdX2 + speed;
-  fbirdX3 = fbirdX3 + speed;
+  
+    birdOn(fbirdX1, fbirdY1, fbirdX2, fbirdY2, fbirdX3, fbirdY3);
+    fbirdX1 = fbirdX1 + speed;
+    fbirdX2 = fbirdX2 + speed;
+    fbirdX3 = fbirdX3 + speed;
+
   if (fbirdX1 > width + 100) {
     fbirdX1  = 0;
   }
@@ -88,17 +93,17 @@ void draw() {
   birdX2 = birdX2 + speed;
   birdX3 = birdX3 + speed;
 
-  if (birdX1  > width + 100) {
-    birdX1  = -100;
+  if (birdX1  > width) {
+    birdX1  = 0;
   }
 
 
-  if (birdX2 > width +100) {
-    birdX2 = - 100;
+  if (birdX2 > width) {
+    birdX2 =  0;
   }
 
-  if (birdX3 > width +100) {
-    birdX3 = - 100;
+  if (birdX3 > width) {
+    birdX3 = 0;
   }
 
 
@@ -115,6 +120,14 @@ void draw() {
   if (cloudX2 > width + cloudDiam) {
     cloudX2 = - cloudDiam;
   }
+ if(mouseX > width || mouseY > 0){
+   if(mousePressed == true){
+   button = true;
+   //else{
+   //  button = false;
+   //}
+   }
+ }
 }//End draw
 
 void sunOn(int dynamic_Diam) {

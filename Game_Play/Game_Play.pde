@@ -9,7 +9,7 @@ int size;
 
 int cloudDiam, cloudX1, cloudY1, cloudX2, cloudY2, cloudOffset;
 int fbirdX1, fbirdY1, fbirdX2, fbirdY2, fbirdX3, fbirdY3;
-int birdX1, birdY1, birdX2, birdY2, birdX3, birdY3;
+int birdX1, birdY1, birdX2, birdY2, birdX3, birdY3, birdWidth;
 int speed;
 
 
@@ -31,13 +31,16 @@ void setup() {
   cloudOffset = 50;
   cloudDiam = 50;
 
+  birdWidth = 50;
+
   fbirdX1 = 100;
   fbirdY1 = 160;
 
   fbirdX2 = 100;
   fbirdY2 = 240;
 
-  fbirdX3 = 150;
+
+  fbirdX3 = fbirdX1 + birdWidth;
   fbirdY3 = 200;
 
   birdX1 = 150;
@@ -46,11 +49,9 @@ void setup() {
   birdX2 = 150;
   birdY2 = 340;
 
-  birdX3 = 210;
+  birdX3 = birdX1 + birdWidth;
   birdY3 = 300;
   size = 0;
- 
-
 
   speed = 2;
 }//End setup
@@ -58,78 +59,86 @@ void setup() {
 void draw() {
   background(BLUE);
   noStroke();
-  if(button == true){
-    fill(PINK);
-  ellipse(mouseX, mouseY, size, size);  
-  }
-if(size == 300){
-  size = 0;
-  }
-  size ++;
+
+  drawPinkEllipse();
+  resetPinkCircleSize();
   sunOn(150);
   circleButton(0);
 
-  
-    birdOn(fbirdX1, fbirdY1, fbirdX2, fbirdY2, fbirdX3, fbirdY3);
-    fbirdX1 = fbirdX1 + speed;
-    fbirdX2 = fbirdX2 + speed;
-    fbirdX3 = fbirdX3 + speed;
 
-  if (fbirdX1 > width + 100) {
-    fbirdX1  = 0;
-  }
-
-
-  if (fbirdX2 > width +100) {
-    fbirdX2 = 0;
-  }
-
-  if (fbirdX3 > width +100) {
-    fbirdX3 = 0;
-  }
-
+  birdOn(fbirdX1, fbirdY1, fbirdX2, fbirdY2, fbirdX3, fbirdY3);
   birdOn(birdX1, birdY1, birdX2, birdY2, birdX3, birdY3);
-  birdX1 = birdX1 + speed;
-  birdX2 = birdX2 + speed;
-  birdX3 = birdX3 + speed;
 
-  if (birdX1  > width) {
-    birdX1  = 0;
-  }
-
-
-  if (birdX2 > width) {
-    birdX2 =  0;
-  }
-
-  if (birdX3 > width) {
-    birdX3 = 0;
-  }
-
+  birdMove ();
+  birdLocationReset();
 
   cloudOn(cloudX1, cloudY1, cloudDiam);
-  cloudX1 = cloudX1 + speed;
+  cloudOn(cloudX2, cloudY2, cloudDiam);
+  cloudMove ();
+  cloudLocationReset();
 
+}//End draw
+void cloudMove() {
+  cloudX1 = cloudX1 + speed;
+  cloudX2 = cloudX2 + speed;
+}
+
+void cloudLocationReset() {
   if (cloudX1 > width + cloudDiam) {
     cloudX1 = - cloudDiam;
   }
-
-  cloudOn(cloudX2, cloudY2, cloudDiam);
-  cloudX2 = cloudX2 + speed;
-
   if (cloudX2 > width + cloudDiam) {
     cloudX2 = - cloudDiam;
   }
- if(mouseX > width || mouseY > 0){
-   if(mousePressed == true){
-   button = true;
-   //else{
-   //  button = false;
-   //}
-   }
- }
-}//End draw
+}
 
+void birdLocationReset() {
+  if (fbirdX1 > width) {
+    fbirdX1  = 0 - birdWidth;
+  }
+
+  if (fbirdX2 > width) {
+    fbirdX2 = 0 - birdWidth;
+  }
+
+  if (fbirdX3 > width + birdWidth) {
+    fbirdX3 = 0;
+  }
+  if (birdX1 > width) {
+    birdX1  = 0 - birdWidth;
+  }
+
+  if (birdX2 > width) {
+    birdX2 = 0 - birdWidth;
+  }
+
+  if (birdX3 > width + birdWidth) {
+    birdX3 = 0;
+  }
+}//End birdlocationReset
+
+void birdMove() {
+  fbirdX1 = fbirdX1 + speed;
+  fbirdX2 = fbirdX2 + speed;
+  fbirdX3 = fbirdX3 + speed;
+
+  birdX1 = birdX1 + speed;
+  birdX2 = birdX2 + speed;
+  birdX3 = birdX3 + speed;
+}
+void drawPinkEllipse() {
+  if (mousePressed == true) {
+    fill(PINK);
+    ellipse(mouseX, mouseY, size, size);
+  }
+  size++;
+}
+
+void resetPinkCircleSize() {
+  if (size == 300) {
+    size = 0;
+  }
+}
 void sunOn(int dynamic_Diam) {
   fill(AMBER);
   ellipse(sunCircleX1, sunCircleY1, dynamic_Diam, dynamic_Diam);

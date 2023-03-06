@@ -1,17 +1,27 @@
 boolean button;
 
-int sunCircleX1;
-int sunCircleY1;
+float sunCircleX1;
+float sunCircleY1;
 
-int myX;
-int myY;
-int size;
+float myX;
+float myY;
+float size;
 
-int cloudDiam, cloudX1, cloudY1, cloudX2, cloudY2, cloudOffset;
-int fbirdX1, fbirdY1, fbirdX2, fbirdY2, fbirdX3, fbirdY3;
-int birdX1, birdY1, birdX2, birdY2, birdX3, birdY3, birdWidth;
-int speed;
+float cloudDiam, cloudX1, cloudY1, cloudX2, cloudY2, cloudOffset;
+float fbirdX1, fbirdY1, fbirdX2, fbirdY2, fbirdX3, fbirdY3;
+float birdX1, birdY1, birdX2, birdY2, birdX3, birdY3, birdWidth, cloudSpeed, birdSpeed;
 
+
+//float a = 50;
+//float b = a;
+//if( b == a ) // true
+//b = 50;
+//b = 60; // reset to 60
+//a = ?;
+
+//d = cloudX;
+//d = d + 2 = 52.
+//cloudX = ? 
 
 final color WHITE = color(255, 255, 255);
 final color BLUE = color (153, 204, 255);
@@ -36,7 +46,7 @@ void setup() {
   fbirdX1 = 100;
   fbirdY1 = 160;
 
-  fbirdX2 = 100;
+  fbirdX2 = fbirdX1;
   fbirdY2 = 240;
 
 
@@ -53,7 +63,9 @@ void setup() {
   birdY3 = 300;
   size = 0;
 
-  speed = 2;
+ cloudSpeed = 2;
+ birdSpeed = 4;
+
 }//End setup
 
 void draw() {
@@ -67,65 +79,72 @@ void draw() {
 
 
   birdOn(fbirdX1, fbirdY1, fbirdX2, fbirdY2, fbirdX3, fbirdY3);
-  birdOn(birdX1, birdY1, birdX2, birdY2, birdX3, birdY3);
+  
+  fbirdX1 = move(fbirdX1, birdSpeed);
+  fbirdX2 = move(fbirdX2 , birdSpeed );
+  fbirdX3 = move(fbirdX3 , birdSpeed);
+  
+ // //birdOn(birdX1, birdY1, birdX2, birdY2, birdX3, birdY3);
 
-  birdMove ();
-  birdLocationReset();
+ //
+ // //fbirdX1 = birdLocationReset(fbirdX1, fbirdX2, fbirdX3);
 
   cloudOn(cloudX1, cloudY1, cloudDiam);
+  cloudX1 = move(cloudX1, cloudSpeed);
+  cloudX1 = cloudLocationReset(cloudX1);
+  
+  
   cloudOn(cloudX2, cloudY2, cloudDiam);
-  cloudMove ();
-  cloudLocationReset();
+  cloudX2 = move(cloudX2, cloudSpeed-0.5);
+  cloudX2 = cloudLocationReset(cloudX2);
+  
+  //cloudMove(cloudX2);
+  
+  
+  //cloudLocationReset(cloudX2);
 
-}//End draw
-void cloudMove() {
-  cloudX1 = cloudX1 + speed;
-  cloudX2 = cloudX2 + speed;
+//float cloudX1
+//float d++ 
+
+}//End draw             
+float move(float d, float k) {
+   d = d + k;
+  return d;
 }
 
-void cloudLocationReset() {
-  if (cloudX1 > width + cloudDiam) {
-    cloudX1 = - cloudDiam;
+float cloudLocationReset(float cx) {
+  if (cx > width + cloudDiam) {
+    cx = - cloudDiam;
   }
-  if (cloudX2 > width + cloudDiam) {
-    cloudX2 = - cloudDiam;
-  }
+  return cx;
 }
 
-void birdLocationReset() {
-  if (fbirdX1 > width) {
-    fbirdX1  = 0 - birdWidth;
+float  birdLocationReset(float wx) {
+  if (wx > width) {
+    wx  = 0 - birdWidth;
   }
 
-  if (fbirdX2 > width) {
-    fbirdX2 = 0 - birdWidth;
+  if (wx > width) {
+    wx = 0 - birdWidth;
   }
 
-  if (fbirdX3 > width + birdWidth) {
-    fbirdX3 = 0;
+  if (wx > width + birdWidth) {
+    wx = 0;
   }
-  if (birdX1 > width) {
-    birdX1  = 0 - birdWidth;
-  }
+  return wx;
+  //if (birdX1 > width) {
+  //  birdX1  = 0 - birdWidth;
+  //}
 
-  if (birdX2 > width) {
-    birdX2 = 0 - birdWidth;
-  }
+  //if (birdX2 > width) {
+  //  birdX2 = 0 - birdWidth;
+  //}
 
-  if (birdX3 > width + birdWidth) {
-    birdX3 = 0;
-  }
+  //if (birdX3 > width + birdWidth) {
+  //  birdX3 = 0;
+  //}
 }//End birdlocationReset
 
-void birdMove() {
-  fbirdX1 = fbirdX1 + speed;
-  fbirdX2 = fbirdX2 + speed;
-  fbirdX3 = fbirdX3 + speed;
-
-  birdX1 = birdX1 + speed;
-  birdX2 = birdX2 + speed;
-  birdX3 = birdX3 + speed;
-}
 void drawPinkEllipse() {
   if (mousePressed == true) {
     fill(PINK);
@@ -139,22 +158,22 @@ void resetPinkCircleSize() {
     size = 0;
   }
 }
-void sunOn(int dynamic_Diam) {
+void sunOn(float dynamic_Diam) {
   fill(AMBER);
   ellipse(sunCircleX1, sunCircleY1, dynamic_Diam, dynamic_Diam);
 }
 
-void cloudOn(int k, int g, int dynamic_Diam) {
+void cloudOn(float k, float g, float dynamic_Diam) {
   fill(WHITE);
   ellipse(k, g, dynamic_Diam, dynamic_Diam);
 }
 
-void birdOn(int k1, int g1, int k2, int g2, int k3, int g3) {
+void birdOn(float k1, float g1, float k2, float g2, float k3, float g3) {
   fill(WHITE);
   triangle(k1, g1, k2, g2, k3, g3);
 }
 
-void circleButton(int dynamic_Diam) {
+void circleButton(float dynamic_Diam) {
   fill(PINK);
   ellipse(mouseX, mouseY, dynamic_Diam, dynamic_Diam);
 }

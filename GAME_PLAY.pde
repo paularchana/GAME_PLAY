@@ -21,7 +21,7 @@ float birdX1, birdY1, birdX2, birdY2, birdX3, birdY3, birdWidth, cloudSpeed, bir
 
 //d = cloudX;
 //d = d + 2 = 52.
-//cloudX = ? 
+//cloudX = ?
 
 final color WHITE = color(255, 255, 255);
 final color BLUE = color (153, 204, 255);
@@ -63,9 +63,9 @@ void setup() {
   birdY3 = 300;
   size = 0;
 
- cloudSpeed = 2;
- birdSpeed = 4;
-
+  cloudSpeed = 2;
+  birdSpeed = 2.5;
+  //frameRate(15);
 }//End setup
 
 void draw() {
@@ -77,38 +77,58 @@ void draw() {
   sunOn(150);
   circleButton(0);
 
-
-  birdOn(fbirdX1, fbirdY1, fbirdX2, fbirdY2, fbirdX3, fbirdY3);
-  
-  fbirdX1 = move(fbirdX1, birdSpeed);
-  fbirdX2 = move(fbirdX2 , birdSpeed );
-  fbirdX3 = move(fbirdX3 , birdSpeed);
-  
- // //birdOn(birdX1, birdY1, birdX2, birdY2, birdX3, birdY3);
-
- //
- // //fbirdX1 = birdLocationReset(fbirdX1, fbirdX2, fbirdX3);
-
   cloudOn(cloudX1, cloudY1, cloudDiam);
   cloudX1 = move(cloudX1, cloudSpeed);
   cloudX1 = cloudLocationReset(cloudX1);
-  
-  
+
+
   cloudOn(cloudX2, cloudY2, cloudDiam);
-  cloudX2 = move(cloudX2, cloudSpeed-0.5);
+  cloudX2 = move(cloudX2, cloudSpeed-0.25);
   cloudX2 = cloudLocationReset(cloudX2);
-  
-  //cloudMove(cloudX2);
-  
-  
-  //cloudLocationReset(cloudX2);
 
-//float cloudX1
-//float d++ 
+// A Bird
+  birdOn(birdX1, birdY1, birdX2, birdY2, birdX3, birdY3);
+  birdX1 = move(birdX1, birdSpeed);
+  birdX2 = move(birdX2, birdSpeed);
+  birdX3 = move(birdX3, birdSpeed);
+  
+   birdX1 = birdLocationReset(birdX1, 0);
+  birdX2 = birdLocationReset(birdX2, 0);
+  birdX3 = birdLocationReset(birdX3, birdWidth);
+  
+  //_____________________________________________________________//
+  
+  //Another bird
+  birdOn(fbirdX1, fbirdY1, fbirdX2, fbirdY2, fbirdX3, fbirdY3);
+  fbirdX1 = move(fbirdX1, birdSpeed-0.25);
+  fbirdX2 = move(fbirdX2, birdSpeed-0.25);
+  fbirdX3 = move(fbirdX3, birdSpeed-0.25);
 
-}//End draw             
+  fbirdX1 = birdLocationReset(fbirdX1, 0);
+  fbirdX2 = birdLocationReset(fbirdX2, 0);
+  fbirdX3 = birdLocationReset(fbirdX3, birdWidth);
+  
+}//End draw
+
+float birdLocationReset(float wx, float m ) {
+
+  if (wx > (width + m) ) {
+
+    if (m == 0) { // means we are getting x1 or x2
+      wx = 0 - birdWidth;
+    }
+
+    if ( m == birdWidth) { // means we are getting x3 where m = 50
+      wx = 0;
+    }
+  }
+  return wx;
+}//End birdlocationReset
+
+
+
 float move(float d, float k) {
-   d = d + k;
+  d = d + k;
   return d;
 }
 
@@ -119,31 +139,6 @@ float cloudLocationReset(float cx) {
   return cx;
 }
 
-float  birdLocationReset(float wx) {
-  if (wx > width) {
-    wx  = 0 - birdWidth;
-  }
-
-  if (wx > width) {
-    wx = 0 - birdWidth;
-  }
-
-  if (wx > width + birdWidth) {
-    wx = 0;
-  }
-  return wx;
-  //if (birdX1 > width) {
-  //  birdX1  = 0 - birdWidth;
-  //}
-
-  //if (birdX2 > width) {
-  //  birdX2 = 0 - birdWidth;
-  //}
-
-  //if (birdX3 > width + birdWidth) {
-  //  birdX3 = 0;
-  //}
-}//End birdlocationReset
 
 void drawPinkEllipse() {
   if (mousePressed == true) {

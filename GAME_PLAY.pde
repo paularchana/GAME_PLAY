@@ -1,3 +1,4 @@
+
 boolean button;
 
 float sunCircleX1;
@@ -10,6 +11,13 @@ float size;
 float cloudDiam, cloudX1, cloudY1, cloudX2, cloudY2, cloudOffset;
 float fbirdX1, fbirdY1, fbirdX2, fbirdY2, fbirdX3, fbirdY3;
 float birdX1, birdY1, birdX2, birdY2, birdX3, birdY3, birdWidth, cloudSpeed, birdSpeed;
+
+float pinkX;
+float pinkY;
+float width_Diam;
+float height_Diam;
+float speed;
+
 
 
 //float a = 50;
@@ -65,6 +73,12 @@ void setup() {
 
   cloudSpeed = 2;
   birdSpeed = 2.5;
+  
+  pinkX = 200;
+  pinkY = 600;
+  width_Diam = 200;
+  height_Diam = 200;
+  speed = 2;
   //frameRate(15);
 }//End setup
 
@@ -72,10 +86,10 @@ void draw() {
   background(BLUE);
   noStroke();
 
-  drawPinkEllipse();
-  resetPinkCircleSize();
+  drawPinkEllipse(pinkX, pinkY, width_Diam);
+  // resetPinkCircleSize();
   sunOn(150);
-  circleButton(0);
+  //circleButton(0);
 
   cloudOn(cloudX1, cloudY1, cloudDiam);
   cloudX1 = move(cloudX1, cloudSpeed);
@@ -86,18 +100,18 @@ void draw() {
   cloudX2 = move(cloudX2, cloudSpeed-0.25);
   cloudX2 = cloudLocationReset(cloudX2);
 
-// A Bird
+  // A Bird
   birdOn(birdX1, birdY1, birdX2, birdY2, birdX3, birdY3);
   birdX1 = move(birdX1, birdSpeed);
   birdX2 = move(birdX2, birdSpeed);
   birdX3 = move(birdX3, birdSpeed);
-  
-   birdX1 = birdLocationReset(birdX1, 0);
+
+  birdX1 = birdLocationReset(birdX1, 0);
   birdX2 = birdLocationReset(birdX2, 0);
   birdX3 = birdLocationReset(birdX3, birdWidth);
-  
+
   //_____________________________________________________________//
-  
+
   //Another bird
   birdOn(fbirdX1, fbirdY1, fbirdX2, fbirdY2, fbirdX3, fbirdY3);
   fbirdX1 = move(fbirdX1, birdSpeed-0.25);
@@ -107,7 +121,6 @@ void draw() {
   fbirdX1 = birdLocationReset(fbirdX1, 0);
   fbirdX2 = birdLocationReset(fbirdX2, 0);
   fbirdX3 = birdLocationReset(fbirdX3, birdWidth);
-  
 }//End draw
 
 float birdLocationReset(float wx, float m ) {
@@ -134,25 +147,33 @@ float move(float d, float k) {
 
 float cloudLocationReset(float cx) {
   if (cx > width + cloudDiam) {
-    cx = - cloudDiam;
+     cx = - cloudDiam;
   }
   return cx;
 }
 
-
-void drawPinkEllipse() {
-  if (mousePressed == true) {
-    fill(PINK);
-    ellipse(mouseX, mouseY, size, size);
+void drawPinkEllipse(float s, float j, float diam) {
+ if(pinkX > diam || pinkX > diam){
+  fill(PINK);
+  ellipse(s, j, diam, diam);
+  speed = - speed;
   }
-  size++;
+pinkX = pinkX + speed;
 }
 
-void resetPinkCircleSize() {
-  if (size == 300) {
-    size = 0;
-  }
-}
+//void drawPinkEllipse() {
+//  if (mousePressed == true) {
+//    fill(PINK);
+//    ellipse(mouseX, mouseY, size, size);
+//  }
+//  size++;
+//}
+
+//void resetPinkCircleSize() {
+//  if (size == 300) {
+//    size = 0;
+//  }
+//}
 void sunOn(float dynamic_Diam) {
   fill(AMBER);
   ellipse(sunCircleX1, sunCircleY1, dynamic_Diam, dynamic_Diam);
@@ -168,7 +189,7 @@ void birdOn(float k1, float g1, float k2, float g2, float k3, float g3) {
   triangle(k1, g1, k2, g2, k3, g3);
 }
 
-void circleButton(float dynamic_Diam) {
-  fill(PINK);
-  ellipse(mouseX, mouseY, dynamic_Diam, dynamic_Diam);
-}
+//void circleButton(float dynamic_Diam) {
+//  fill(PINK);
+//  ellipse(mouseX, mouseY, dynamic_Diam, dynamic_Diam);
+//}

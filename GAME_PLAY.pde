@@ -17,6 +17,7 @@ float pinkY;
 float width_Diam;
 float height_Diam;
 float speed;
+float maxSize;
 
 
 
@@ -79,6 +80,7 @@ void setup() {
   width_Diam = 200;
   height_Diam = 200;
   speed = 2;
+  maxSize = 300;
   //frameRate(15);
 }//End setup
 
@@ -87,6 +89,7 @@ void draw() {
   noStroke();
 
   drawPinkEllipse(pinkX, pinkY, width_Diam);
+  width_Diam = move1(width_Diam, maxSize);
   // resetPinkCircleSize();
   sunOn(150);
   //circleButton(0);
@@ -152,14 +155,17 @@ float cloudLocationReset(float cx) {
   return cx;
 }
 
-void drawPinkEllipse(float s, float j, float diam) {
- if(pinkX > diam || pinkX > diam){
-  fill(PINK);
-  ellipse(s, j, diam, diam);
-  speed = - speed;
+float move1(float pk, float r){
+  if(pk > 300){
+    speed = - speed;
   }
-pinkX = pinkX + speed;
-}
+  if(pk < 10){
+    speed = - speed;
+  }
+  pk = pk + speed;
+  return pk;
+  
+}//end 
 
 //void drawPinkEllipse() {
 //  if (mousePressed == true) {
@@ -172,9 +178,10 @@ pinkX = pinkX + speed;
 //void resetPinkCircleSize() {
 //  if (size == 300) {
 //    size = 0;
-//  }
+//} }
 //}
-void sunOn(float dynamic_Diam) {
+
+void sunOn(float dynamic_Diam){
   fill(AMBER);
   ellipse(sunCircleX1, sunCircleY1, dynamic_Diam, dynamic_Diam);
 }
@@ -189,6 +196,10 @@ void birdOn(float k1, float g1, float k2, float g2, float k3, float g3) {
   triangle(k1, g1, k2, g2, k3, g3);
 }
 
+void drawPinkEllipse(float s, float j, float diam) {
+  fill(PINK);
+  ellipse(s, j, diam, diam);
+}
 //void circleButton(float dynamic_Diam) {
 //  fill(PINK);
 //  ellipse(mouseX, mouseY, dynamic_Diam, dynamic_Diam);

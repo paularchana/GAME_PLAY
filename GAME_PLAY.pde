@@ -14,8 +14,8 @@ float birdX1, birdY1, birdX2, birdY2, birdX3, birdY3, birdWidth, cloudSpeed, bir
 
 float pinkX;
 float pinkY;
-float width_Diam;
-float height_Diam;
+float diam;
+
 float speed;
 float maxSize;
 
@@ -75,10 +75,10 @@ void setup() {
   cloudSpeed = 2;
   birdSpeed = 2.5;
   
-  pinkX = 200;
+  pinkX = 300;
   pinkY = 600;
-  width_Diam = 200;
-  height_Diam = 200;
+  diam = 200;
+  
   speed = 2;
   maxSize = 300;
   //frameRate(15);
@@ -88,8 +88,9 @@ void draw() {
   background(BLUE);
   noStroke();
 
-  drawPinkEllipse(pinkX, pinkY, width_Diam);
-  width_Diam = move1(width_Diam, maxSize);
+  drawPinkEllipse(pinkX, pinkY, diam);
+  diam = move1(diam, maxSize);
+
   // resetPinkCircleSize();
   sunOn(150);
   //circleButton(0);
@@ -153,31 +154,35 @@ float cloudLocationReset(float cx) {
   return cx;
 }
 
-float move1(float pk, float r){
-  if(pk > r){
+float move1(float circleDiam, float top_limit){
+  if(circleDiam > top_limit){
     speed = - speed;
   }
-  if(pk < 10){
+  if(circleDiam < 10){
     speed = - speed;
   }
-  pk = pk + speed;
-  return pk;
+  circleDiam = circleDiam + speed;
+  return circleDiam;
   
 }//end 
 
-void drawPinkEllipse(float s, float j, float diam) {
+
+void drawPinkEllipse(float s, float j, float inputDiam) {
+  
   if(mousePressed == true){
-    if(mouseX > diam && mouseX < diam){
-      if(mouseY > diam && mouseY < diam){
-      }
-      
+    
+    if(mouseX > (pinkX-inputDiam/2) && mouseX < (pinkX + inputDiam/2) ){
+       print("hi");
+       
+       if(mouseY > (pinkY - inputDiam/2) && mouseY< ( pinkY + inputDiam)){
+         print("Bye");
+       }
     }
     
-    
-  }
+  }// mouse pressed.
   
   fill(PINK);
-  ellipse(s, j, diam, diam);
+  ellipse(s, j, inputDiam, inputDiam);
 }
 
 

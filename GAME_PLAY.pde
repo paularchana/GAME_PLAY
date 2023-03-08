@@ -141,8 +141,6 @@ float birdLocationReset(float wx, float m ) {
   return wx;
 }//End birdlocationReset
 
-
-
 float move(float d, float k) {
   d = d + k;
   return d;
@@ -156,7 +154,7 @@ float cloudLocationReset(float cx) {
 }
 
 float move1(float pk, float r){
-  if(pk > 300){
+  if(pk > r){
     speed = - speed;
   }
   if(pk < 10){
@@ -167,19 +165,21 @@ float move1(float pk, float r){
   
 }//end 
 
-//void drawPinkEllipse() {
-//  if (mousePressed == true) {
-//    fill(PINK);
-//    ellipse(mouseX, mouseY, size, size);
-//  }
-//  size++;
-//}
+void drawPinkEllipse(float s, float j, float diam) {
+  if(mousePressed == true){
+    if(mouseX > diam && mouseX < diam){
+      if(mouseY > diam && mouseY < diam){
+      }
+      
+    }
+    
+    
+  }
+  
+  fill(PINK);
+  ellipse(s, j, diam, diam);
+}
 
-//void resetPinkCircleSize() {
-//  if (size == 300) {
-//    size = 0;
-//} }
-//}
 
 void sunOn(float dynamic_Diam){
   fill(AMBER);
@@ -195,12 +195,3 @@ void birdOn(float k1, float g1, float k2, float g2, float k3, float g3) {
   fill(WHITE);
   triangle(k1, g1, k2, g2, k3, g3);
 }
-
-void drawPinkEllipse(float s, float j, float diam) {
-  fill(PINK);
-  ellipse(s, j, diam, diam);
-}
-//void circleButton(float dynamic_Diam) {
-//  fill(PINK);
-//  ellipse(mouseX, mouseY, dynamic_Diam, dynamic_Diam);
-//}

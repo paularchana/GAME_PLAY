@@ -1,12 +1,14 @@
+/*
+ Name: Archana Paul
+ Date: 3/09/2023
+ Version : 1.0
+ Description: Random object location by clicking on a target and getting a score.
+ */
 
 boolean button;
 
 float sunCircleX1;
 float sunCircleY1;
-
-float myX;
-float myY;
-float size;
 
 float cloudDiam, cloudX1, cloudY1, cloudX2, cloudY2, cloudOffset;
 float fbirdX1, fbirdY1, fbirdX2, fbirdY2, fbirdX3, fbirdY3;
@@ -18,19 +20,7 @@ float diam;
 
 float speed;
 float maxSize;
-
-
-
-//float a = 50;
-//float b = a;
-//if( b == a ) // true
-//b = 50;
-//b = 60; // reset to 60
-//a = ?;
-
-//d = cloudX;
-//d = d + 2 = 52.
-//cloudX = ?
+int score;
 
 final color WHITE = color(255, 255, 255);
 final color BLUE = color (153, 204, 255);
@@ -58,7 +48,6 @@ void setup() {
   fbirdX2 = fbirdX1;
   fbirdY2 = 240;
 
-
   fbirdX3 = fbirdX1 + birdWidth;
   fbirdY3 = 200;
 
@@ -70,35 +59,37 @@ void setup() {
 
   birdX3 = birdX1 + birdWidth;
   birdY3 = 300;
-  size = 0;
 
   cloudSpeed = 2;
   birdSpeed = 2.5;
-  
-  pinkX = 300;
-  pinkY = 600;
+
   diam = 200;
-  
-  speed = 2;
   maxSize = 300;
-  //frameRate(15);
+
+  pinkX = random(maxSize, width-maxSize);
+  pinkY = random(maxSize, height-maxSize);
+
+  speed = 2;
+  score = 0;
+
 }//End setup
 
 void draw() {
   background(BLUE);
   noStroke();
 
-  drawPinkEllipse(pinkX, pinkY, diam);
-  diam = move1(diam, maxSize);
+  textSize(50);
+  text(" SCORE IS: " + score, 100, 100);
 
-  // resetPinkCircleSize();
+
+  drawPinkEllipse(pinkX, pinkY);
+  diam = move1(diam, maxSize);
+  
   sunOn(150);
-  //circleButton(0);
 
   cloudOn(cloudX1, cloudY1, cloudDiam);
   cloudX1 = move(cloudX1, cloudSpeed);
   cloudX1 = cloudLocationReset(cloudX1);
-
 
   cloudOn(cloudX2, cloudY2, cloudDiam);
   cloudX2 = move(cloudX2, cloudSpeed-0.25);
@@ -128,13 +119,10 @@ void draw() {
 }//End draw
 
 float birdLocationReset(float wx, float m ) {
-
   if (wx > (width + m) ) {
-
     if (m == 0) { // means we are getting x1 or x2
       wx = 0 - birdWidth;
     }
-
     if ( m == birdWidth) { // means we are getting x3 where m = 50
       wx = 0;
     }
@@ -149,44 +137,40 @@ float move(float d, float k) {
 
 float cloudLocationReset(float cx) {
   if (cx > width + cloudDiam) {
-     cx = - cloudDiam;
+    cx = - cloudDiam;
   }
   return cx;
 }
 
-float move1(float circleDiam, float top_limit){
-  if(circleDiam > top_limit){
+float move1(float circleDiam, float top_limit) {
+  if (circleDiam > top_limit) {
     speed = - speed;
   }
-  if(circleDiam < 10){
+  if (circleDiam < 10) {
     speed = - speed;
   }
   circleDiam = circleDiam + speed;
   return circleDiam;
-  
-}//end 
+}//end
 
 
-void drawPinkEllipse(float s, float j, float inputDiam) {
-  
-  if(mousePressed == true){
-    
-    if(mouseX > (pinkX-inputDiam/2) && mouseX < (pinkX + inputDiam/2) ){
-       print("hi");
-       
-       if(mouseY > (pinkY - inputDiam/2) && mouseY< ( pinkY + inputDiam)){
-         print("Bye");
-       }
-    }
-    
-  }// mouse pressed.
-  
+void drawPinkEllipse(float s, float j) {
   fill(PINK);
-  ellipse(s, j, inputDiam, inputDiam);
+  ellipse(s, j, diam, diam);
+}// mouse pressed.
+
+void mouseClicked() {
+  if (mouseX > (pinkX-diam/2) && mouseX < (pinkX + diam/2) ) {
+    if (mouseY > (pinkY - diam/2) && mouseY< ( pinkY + diam)) {
+      // if mouse clicked in the proper location, do these tasks.
+      score ++;
+      pinkX = random(width-maxSize);
+      pinkY = random(height-maxSize);
+    }
+  }
 }
 
-
-void sunOn(float dynamic_Diam){
+void sunOn(float dynamic_Diam) {
   fill(AMBER);
   ellipse(sunCircleX1, sunCircleY1, dynamic_Diam, dynamic_Diam);
 }

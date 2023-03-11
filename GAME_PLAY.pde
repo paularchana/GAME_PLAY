@@ -1,11 +1,10 @@
 /*
- Name: Archana Paul
+ Author: Archana Paul
  Date: 3/09/2023
  Version : 1.0
  Description: Random object location by clicking on a target and getting a score.
  */
 
-boolean button;
 
 float sunCircleX1;
 float sunCircleY1;
@@ -31,7 +30,7 @@ void setup() {
   size(1080, 800);
   sunCircleX1 = width -(width/8);
   sunCircleY1 = height/5;
-  button = false;
+  
 
   cloudX1 = 50;
   cloudY1 = 240;

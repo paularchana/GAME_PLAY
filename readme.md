@@ -8,4 +8,4 @@ In this project, I have learned :
  - Using random() to randomly generate each values.
  - Parallelly increment points.
 
-Check out my program (here)[https://paularchana.github.io/GAME_PLAY/]
+Check out my program [here](https://paularchana.github.io/GAME_PLAY/)
